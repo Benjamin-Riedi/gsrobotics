@@ -1,0 +1,6 @@
+# Minimal RGB-only dependencies for Ubuntu 20.04 / ROS1 Noetic path
+# Install ROS Python deps via apt where possible:
+# sudo apt install ros-noetic-rospy ros-noetic-sensor-msgs ros-noetic-cv-bridge
+
+numpy>=1.19,<2.0
+opencv-python>=4.5,<4.9
