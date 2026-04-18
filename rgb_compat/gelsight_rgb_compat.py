@@ -98,11 +98,15 @@ class GelSightMiniRGBCompat:
         else:
             self.cap = cv2.VideoCapture(resolved_device)
 
-        if not self.cap or not self.cap.isOpened():
+        if not self.cap.isOpened():
             raise RuntimeError(f"Could not open camera device: {resolved_device}")
 
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, float(self.target_width))
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, float(self.target_height))
+        width_ok = self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, float(self.target_width))
+        height_ok = self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, float(self.target_height))
+        if not width_ok or not height_ok:
+            print(
+                "Warning: camera driver did not confirm requested frame size properties."
+            )
         actual_width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         actual_height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         if actual_width != self.target_width or actual_height != self.target_height:
