@@ -5,18 +5,18 @@ No existing files are modified.
 
 ## What was added
 
-- `/home/runner/work/gsrobotics/gsrobotics/rgb_compat/gelsight_rgb_compat.py`
-- `/home/runner/work/gsrobotics/gsrobotics/ros1_rgb_publisher.py`
-- `/home/runner/work/gsrobotics/gsrobotics/requirements-rgb-noetic.txt`
-- `/home/runner/work/gsrobotics/gsrobotics/examples/rgb_ros1_noetic_config.json`
-- `/home/runner/work/gsrobotics/gsrobotics/examples/run_ros1_rgb_publisher.sh`
+- `rgb_compat/gelsight_rgb_compat.py`
+- `ros1_rgb_publisher.py`
+- `requirements-rgb-noetic.txt`
+- `examples/rgb_ros1_noetic_config.json`
+- `examples/run_ros1_rgb_publisher.sh`
 
 ## Option A (recommended): Python 3.8/3.9 compatible RGB path
 
 1. Create and activate a Python env (3.8/3.9 on Ubuntu 20.04).
 2. Install RGB-only deps:
    ```bash
-   pip install -r /home/runner/work/gsrobotics/gsrobotics/requirements-rgb-noetic.txt
+   pip install -r requirements-rgb-noetic.txt
    ```
 3. Install ROS Noetic Python dependencies (system packages):
    ```bash
@@ -25,7 +25,7 @@ No existing files are modified.
    ```
 4. Run publisher:
    ```bash
-   /home/runner/work/gsrobotics/gsrobotics/examples/run_ros1_rgb_publisher.sh
+   ./examples/run_ros1_rgb_publisher.sh
    ```
 
 ## Option B: Keep capture in Python 3.12, bridge to ROS1 3.8
