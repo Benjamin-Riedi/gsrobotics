@@ -64,7 +64,7 @@ class GelSightMiniRGBCompat:
 
             video_nodes = sorted(glob.glob("/dev/video*"))
             for path in video_nodes:
-                match = re.search(r"/dev/video(\\d+)$", path)
+                match = re.search(r"/dev/video(\d+)$", path)
                 if match:
                     devices[int(match.group(1))] = path
             return devices
@@ -72,7 +72,7 @@ class GelSightMiniRGBCompat:
         for idx in range(0, 10):
             cap = cv2.VideoCapture(idx)
             if cap.isOpened():
-                devices[idx] = "Video Device {0}".format(idx)
+                devices[idx] = f"Video Device {idx}"
                 cap.release()
 
         return devices
