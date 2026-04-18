@@ -99,7 +99,7 @@ class GelSightMiniRGBCompat:
             self.cap = cv2.VideoCapture(resolved_device)
 
         if not self.cap or not self.cap.isOpened():
-            raise RuntimeError("Could not open camera device: {0}".format(resolved_device))
+            raise RuntimeError(f"Could not open camera device: {resolved_device}")
 
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, float(self.target_width))
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, float(self.target_height))
@@ -107,12 +107,8 @@ class GelSightMiniRGBCompat:
         actual_height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         if actual_width != self.target_width or actual_height != self.target_height:
             print(
-                "Warning: requested resolution {0}x{1}, got {2}x{3}".format(
-                    self.target_width,
-                    self.target_height,
-                    actual_width,
-                    actual_height,
-                )
+                f"Warning: requested resolution {self.target_width}x{self.target_height}, "
+                f"got {actual_width}x{actual_height}"
             )
         self._time_prev = time.time()
 
