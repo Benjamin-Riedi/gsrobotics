@@ -1,6 +1,7 @@
 import glob
 import os
 import platform
+import re
 import time
 from typing import Dict, Optional, Tuple, Union
 
@@ -62,8 +63,10 @@ class GelSightMiniRGBCompat:
                 return devices
 
             video_nodes = sorted(glob.glob("/dev/video*"))
-            for idx, path in enumerate(video_nodes):
-                devices[idx] = path
+            for path in video_nodes:
+                match = re.search(r"/dev/video(\\d+)$", path)
+                if match:
+                    devices[int(match.group(1))] = path
             return devices
 
         for idx in range(0, 10):
@@ -100,6 +103,17 @@ class GelSightMiniRGBCompat:
 
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, float(self.target_width))
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, float(self.target_height))
+        actual_width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        actual_height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        if actual_width != self.target_width or actual_height != self.target_height:
+            print(
+                "Warning: requested resolution {0}x{1}, got {2}x{3}".format(
+                    self.target_width,
+                    self.target_height,
+                    actual_width,
+                    actual_height,
+                )
+            )
         self._time_prev = time.time()
 
     def read_rgb(self) -> np.ndarray:
