@@ -16,6 +16,7 @@ def _crop_and_resize(
     target_size: Optional[Tuple[int, int]] = None,
     border_fraction: float = 0.15,
 ) -> np.ndarray:
+    # Clamp below 0.5 so cropping never removes all rows/columns.
     border_fraction = min(max(0.0, border_fraction), 0.49)
     border_rows = int(image.shape[0] * border_fraction)
     border_cols = int(image.shape[1] * border_fraction)
@@ -68,7 +69,7 @@ class GelSightMiniRGBCompat:
         for idx in range(0, 10):
             cap = cv2.VideoCapture(idx)
             if cap.isOpened():
-                devices[idx] = "Camera {0}".format(idx)
+                devices[idx] = "Video Device {0}".format(idx)
                 cap.release()
 
         return devices

@@ -3,4 +3,5 @@
 # sudo apt install ros-noetic-rospy ros-noetic-sensor-msgs ros-noetic-cv-bridge
 
 numpy>=1.19,<2.0
+# Keep under 4.9 to stay on broadly available wheels for Python 3.8/3.9 on Ubuntu 20.04.
 opencv-python>=4.5,<4.9

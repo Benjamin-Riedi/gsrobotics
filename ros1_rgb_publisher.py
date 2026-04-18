@@ -23,7 +23,7 @@ def main():
         default=os.path.join("examples", "rgb_ros1_noetic_config.json"),
         help="Path to JSON config file",
     )
-    args, _ = parser.parse_known_args()
+    args = parser.parse_args(rospy.myargv()[1:])
 
     cfg = load_config(args.config)
 
