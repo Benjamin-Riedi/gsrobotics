@@ -17,12 +17,12 @@ def _crop_and_resize(
     border_fraction: float = 0.15,
 ) -> np.ndarray:
     border_fraction = min(max(0.0, border_fraction), 0.49)
-    border_x = int(image.shape[0] * border_fraction)
-    border_y = int(image.shape[1] * border_fraction)
+    border_rows = int(image.shape[0] * border_fraction)
+    border_cols = int(image.shape[1] * border_fraction)
 
     cropped = image[
-        border_x : image.shape[0] - border_x,
-        border_y : image.shape[1] - border_y,
+        border_rows : image.shape[0] - border_rows,
+        border_cols : image.shape[1] - border_cols,
     ]
 
     if target_size is not None:
