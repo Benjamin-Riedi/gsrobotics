@@ -31,7 +31,7 @@ def summarize_intervals(intervals: list[float], measurement_seconds: float) -> N
     min_fps = 1.0 / max_interval if max_interval > 0 else 0.0
 
     log_message(
-        f"Captured {len(intervals)} intervals (~{len(intervals) + 1} frames) "
+        f"Captured {len(intervals) + 1} frames ({len(intervals)} intervals) "
         f"in {measurement_seconds:.2f}s."
     )
     log_message(
@@ -83,11 +83,13 @@ def run_frequency_test(
     start_time = time.perf_counter()
     measurement_start = None
     last_capture_time = None
+    last_loop_time = time.perf_counter()
 
     try:
         while True:
             loop_start = time.perf_counter()
-            frame = cam.update(0.0)  # GelSightMini.update ignores dt; 0.0 is a placeholder.
+            frame = cam.update(loop_start - last_loop_time)
+            last_loop_time = loop_start
 
             if frame is None:
                 continue
@@ -123,8 +125,7 @@ def run_frequency_test(
     except KeyboardInterrupt:
         log_message("Interrupted by user. Reporting collected statistics.")
     finally:
-        if cam.camera:
-            cam.camera.release()
+        cam.stop()
 
     measurement_end = last_capture_time or time.perf_counter()
     measurement_seconds = (

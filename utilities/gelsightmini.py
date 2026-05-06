@@ -202,6 +202,16 @@ class GelSightMini:
         self.recording = False
         self.frame_count = 0
 
+    def stop(self) -> None:
+        """
+        Stop the camera stream and release resources.
+        """
+        if self.recording:
+            self.stop_recording()
+        if self.camera:
+            self.camera.release()
+            self.camera = None
+
     def start_recording(self, filepath: str = None) -> None:
         """
         Start recording the camera feed to a video file.
