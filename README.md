@@ -4,11 +4,12 @@ This respository contains python code to connect to the GelSight Mini hardware. 
 
 On this page, you will find
  - [Demo Scripts](#demo-scripts) for
-   + [Live View](#liveview-demo)
-   + [Live View Dual](#liveview-dual-demo)
-   + [Marker tracking](#marker-tracker-demo)
-   + [3D Viewer](#3d-viewer-demo)
-   + [Basic OpenCV Demo](#basic-opencv-demo)
+    + [Live View](#liveview-demo)
+    + [Live View Dual](#liveview-dual-demo)
+    + [Marker tracking](#marker-tracker-demo)
+    + [3D Viewer](#3d-viewer-demo)
+    + [Basic OpenCV Demo](#basic-opencv-demo)
+    + [Frequency Test](#frequency-test-demo)
  - Detailed [Installation Instructions](#installation-instructions) for
    + [Windows](#windows-installation-instructions)
    + [Linux](#linux-installation-instructions)
@@ -140,6 +141,15 @@ OpenCV functions.
 <tr><td>Live view from GelSight Mini using OpenCV functions</td>
 </tr>
 </table>
+
+## Frequency Test Demo
+
+This demo measures the camera capture rate using RGB frames only. It is useful for
+determining the maximum frequency that could later be published to a ROS topic.
+
+1. Run `demo_frequency_test.py` in PyCharm or from the terminal.
+2. Use `--target-hz` to throttle the loop to a desired frequency (leave at 0 for max throughput).
+3. Use `--duration` or `--frames` to control how long the test runs.
 
 
 ## GS Config
