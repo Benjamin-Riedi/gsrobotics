@@ -30,7 +30,10 @@ def summarize_intervals(intervals: list[float], measurement_seconds: float) -> N
     max_fps = 1.0 / min_interval if min_interval > 0 else 0.0
     min_fps = 1.0 / max_interval if max_interval > 0 else 0.0
 
-    log_message(f"Captured {len(intervals)} frame intervals in {measurement_seconds:.2f}s.")
+    log_message(
+        f"Captured {len(intervals)} intervals (~{len(intervals) + 1} frames) "
+        f"in {measurement_seconds:.2f}s."
+    )
     log_message(
         "FPS summary -> "
         f"mean: {mean_fps:.2f}, min: {min_fps:.2f}, max: {max_fps:.2f}"
@@ -77,6 +80,7 @@ def run_frequency_test(
     intervals: list[float] = []
     frame_count = 0
     warmup_remaining = max(warmup_frames, 0)
+    initial_warmup = warmup_remaining
     start_time = time.perf_counter()
     measurement_start = None
     last_capture_time = None
@@ -104,8 +108,15 @@ def run_frequency_test(
 
             if max_frames > 0 and frame_count >= max_frames:
                 break
-            if duration_s > 0 and capture_time - start_time >= duration_s:
-                break
+            if duration_s > 0:
+                if measurement_start is not None:
+                    if capture_time - measurement_start >= duration_s:
+                        break
+                elif (
+                    warmup_remaining == initial_warmup
+                    and capture_time - start_time >= duration_s
+                ):
+                    break
 
             if target_hz > 0:
                 target_period = 1.0 / target_hz
