@@ -80,11 +80,12 @@ def run_frequency_test(
     start_time = time.perf_counter()
     measurement_start = None
     last_capture_time = None
+    update_dt = 0.0
 
     try:
         while True:
             loop_start = time.perf_counter()
-            frame = cam.update(0.0)
+            frame = cam.update(update_dt)
 
             if frame is None:
                 continue
@@ -104,8 +105,12 @@ def run_frequency_test(
 
             if max_frames > 0 and frame_count >= max_frames:
                 break
-            if duration_s > 0 and capture_time - start_time >= duration_s:
-                break
+            if duration_s > 0:
+                if measurement_start is None:
+                    if capture_time - start_time >= duration_s:
+                        break
+                elif capture_time - measurement_start >= duration_s:
+                    break
 
             if target_hz > 0:
                 target_period = 1.0 / target_hz
