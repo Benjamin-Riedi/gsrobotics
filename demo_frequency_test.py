@@ -70,7 +70,7 @@ def run_frequency_test(
     cam.select_device(device_index)
     cam.start()
 
-    log_message("Starting frequency test (RGB frames only). Press Ctrl+C to stop.")
+    log_message("Starting frequency test (RGB frames only). Press Ctrl + C to stop.")
     log_message(
         f"Target frequency: {target_hz:.2f} Hz"
         if target_hz > 0
@@ -80,7 +80,6 @@ def run_frequency_test(
     intervals: list[float] = []
     frame_count = 0
     warmup_remaining = max(warmup_frames, 0)
-    initial_warmup = warmup_remaining
     start_time = time.perf_counter()
     measurement_start = None
     last_capture_time = None
@@ -112,10 +111,7 @@ def run_frequency_test(
                 if measurement_start is not None:
                     if capture_time - measurement_start >= duration_s:
                         break
-                elif (
-                    warmup_remaining == initial_warmup
-                    and capture_time - start_time >= duration_s
-                ):
+                elif capture_time - start_time >= duration_s:
                     break
 
             if target_hz > 0:
